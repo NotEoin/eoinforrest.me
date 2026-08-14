@@ -1,50 +1,40 @@
-# React + TypeScript + Vite
+# eoinforrest.me
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My portfolio site — a virtual CV, a cinematic reel of five projects, and interactive demos you can
+operate in the browser.
 
-Currently, two official plugins are available:
+## What it is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **`/`** — an introduction, five full-screen project acts, how the projects connect, the short CV and contact.
+- **`/projects`** — a fast index of all nine projects.
+- **`/projects/:slug`** — a deep dive per project, with its demo where a demo helps.
+- **`/cv`** — the virtual CV, printable, with a matching PDF at `/Eoin-Forrest-CV.pdf`.
 
-## Expanding the ESLint configuration
+The five demos are faithful but scripted reconstructions: the Lidar A\* search and the sniffer's
+fingerprint clustering are genuinely computed in the browser; the hal-voice timings and the RAG
+answers are authored. Every demo says so in its caption.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Stack
 
-- Configure the top-level `parserOptions` property like this:
+Vite · React 18 · TypeScript · Tailwind CSS · Framer Motion · React Router. No other runtime
+dependencies. The act choreography uses CSS scroll-driven animations where supported, with a
+Framer Motion fallback.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Running it
+
+```
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+`npm run build` produces `dist/`. Deep links need an SPA rewrite — `vercel.json` carries one.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Notes
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- Every asset that doesn't exist yet renders as a visible placeholder at its real path and aspect
+  ratio, so swapping the file in needs no layout change.
+- All project data — repo URLs, tints, status, media paths — lives in `src/data/projects.ts`.
+- The zero-shot CXR page is built but gated (`published: false`) until supervisor sign-off.
+- The contact form posts to Formspree once a public form id is set in
+  `src/components/ContactSection.tsx`; until then it falls back to composing an email.
+- The CV page and the PDF are updated in the same commit, always.
