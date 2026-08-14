@@ -1,0 +1,7 @@
+{
+  "name": "hatch-capture-scene",
+  "version": "1.0.0",
+  "description": "The staged desktop Electron loads for the Hatch captures.",
+  "main": "scene.js",
+  "private": true
+}

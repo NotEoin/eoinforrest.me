@@ -89,14 +89,18 @@ export const projects: Project[] = [
     hasPage: true,
     demo: 'hatch',
     related: [],
+    // The check-in take: the creature leaves the window, asks you to check in
+    // from the middle of the desktop, and walks back to open the panel. Loops
+    // seamlessly. `hatch-checkin-ui` is the same take with the panel tour left
+    // in, and `hatch-roam` is the earlier wander-only clip — swap either in here.
     plate: {
       kind: 'video',
-      src: '/media/hatch/hatch-roam.mp4',
-      webm: '/media/hatch/hatch-roam.webm',
-      poster: '/media/hatch/hatch-roam-poster.jpg',
+      src: '/media/hatch/hatch-checkin.mp4',
+      webm: '/media/hatch/hatch-checkin.webm',
+      poster: '/media/hatch/hatch-checkin-poster.jpg',
       width: 1920,
       height: 1080,
-      label: 'HATCH ROAM — creature crossing onto the desktop over other apps',
+      label: 'HATCH CHECK-IN — the creature leaves the window, prompts, and returns',
     },
   },
   {
