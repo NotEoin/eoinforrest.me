@@ -64,6 +64,12 @@ a { color: inherit; text-decoration: none; }
 /* entrance reveals for normal sections (non-act) run on load/in-view via
    Framer Motion; the acts use CSS scroll-driven animation where supported */
 
+/* run-once entrance for the introduction — text is legible before it ends */
+.enter {
+  animation: rise 600ms var(--ease-out) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
 /* ------------------------------------------------- the reel */
 .act {
   position: relative;
@@ -92,6 +98,14 @@ a { color: inherit; text-decoration: none; }
   }
   .sda .act__plate--flat {
     animation-name: plate-flat;
+  }
+  /* plate cross-fade for elements that keep their own positioning (the lens
+     canvas) — it uses the `translate` property so the keyframe transform
+     never fights the centring */
+  .sda .act-fade {
+    animation: plate linear both;
+    animation-timeline: --act;
+    animation-range: entry 0% exit 100%;
   }
   .sda .act__content {
     animation: rise 700ms var(--ease-out) both;
@@ -164,7 +178,7 @@ a { color: inherit; text-decoration: none; }
   }
   .act, .act--tall { height: auto; min-height: 100dvh; }
   .act__pin { position: static; height: auto; min-height: 100dvh; }
-  .act__plate, .act__content {
+  .act__plate, .act__content, .act-fade {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
@@ -176,9 +190,26 @@ a { color: inherit; text-decoration: none; }
 
 /* ------------------------------------------------- print (the /cv page) */
 @media print {
-  body { background: #fff; color: #111; }
-  nav, .scroll-progress, .no-print { display: none !important; }
+  :root {
+    --ink-000: #fff;
+    --ink-050: #fff;
+    --ink-100: #f4f4f4;
+    --line: rgba(0, 0, 0, 0.18);
+    --line-2: rgba(0, 0, 0, 0.3);
+    --text-hi: #111;
+    --text-md: #222;
+    --text-lo: #555;
+    --accent: #111;
+  }
+  body { background: #fff; color: #222; }
+  nav, footer, .scroll-progress, .no-print { display: none !important; }
   main { padding-top: 0 !important; }
   .cv-section { break-inside: avoid; }
+  .liquid-glass, .liquid-glass-strong {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    background: transparent;
+  }
   a { color: #111; }
 }
