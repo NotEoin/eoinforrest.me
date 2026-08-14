@@ -1,6 +1,27 @@
+import { useState } from 'react'
 import Placeholder from './Placeholder'
 import { ArrowDown } from './Icons'
 import { CV_PDF, GITHUB, LINKEDIN } from '../data/projects'
+
+/** The portrait, falling back to the striped placeholder until the file lands
+ *  — same path, same 4:5 box, so the swap costs no layout. */
+function Headshot() {
+  const [failed, setFailed] = useState(false)
+  if (failed) {
+    return <Placeholder id="headshot" ratio="4/5" label="HEADSHOT" file="media/headshot.jpg" size="1000×1250" />
+  }
+  return (
+    <img
+      src="/media/headshot.jpg"
+      alt="Eoin Forrest"
+      width={1000}
+      height={1250}
+      className="w-full rounded-[20px] border border-[var(--line)]"
+      style={{ aspectRatio: '4 / 5', objectFit: 'cover' }}
+      onError={() => setFailed(true)}
+    />
+  )
+}
 
 /**
  * The opening — a normal section, not a hero and not full-height. Nothing in
@@ -67,13 +88,7 @@ export default function IntroSection() {
         </div>
 
         <figure className="enter order-1 m-0 max-w-[340px]">
-          <Placeholder
-            id="headshot"
-            ratio="4/5"
-            label="HEADSHOT"
-            file="media/headshot.jpg"
-            size="1000×1250"
-          />
+          <Headshot />
           <figcaption className="mt-2.5 font-mono text-[10px] uppercase tracking-[.12em] text-[var(--text-lo)]">
             Newcastle, 2026
           </figcaption>
