@@ -54,11 +54,11 @@ export default function EcosystemSection() {
               <text x="14" y="176">dissertation</text>
               <text x="219" y="176">jupyter-tts-alerts</text>
             </g>
-            <g fill="var(--text-lo)" fontSize="9.5" letterSpacing="1">
-              <text x="152" y="42">FEEDS THE VAULT</text>
-              <text x="357" y="42">SITS ON TOP OF</text>
-              <text x="152" y="164">WRITTEN DURING</text>
-              <text x="288" y="118">MEMORY</text>
+            <g fill="var(--text-lo)" fontSize="9.5" letterSpacing="1" textAnchor="middle">
+              <text x="177" y="14">FEEDS THE VAULT</text>
+              <text x="382" y="14">SITS ON TOP OF</text>
+              <text x="177" y="138">WRITTEN DURING</text>
+              <text x="310" y="118" textAnchor="start">MEMORY</text>
             </g>
           </svg>
         </Reveal>

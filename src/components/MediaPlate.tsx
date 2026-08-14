@@ -37,6 +37,15 @@ export default function MediaPlate({
     return () => mq.removeEventListener('change', on)
   }, [])
 
+  // a missing poster never fires the video's error event, so probe it —
+  // otherwise a video that was never asked to play sits as a black frame
+  useEffect(() => {
+    if (media.kind !== 'video' || !media.poster) return
+    const img = new Image()
+    img.onerror = () => setFailed(true)
+    img.src = media.poster
+  }, [media])
+
   // autoplay only while on screen, and never under reduced motion
   useEffect(() => {
     if (media.kind !== 'video' || failed || reduced) return
@@ -46,7 +55,8 @@ export default function MediaPlate({
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().then(() => setPlaying(true)).catch(() => setFailed(false))
+          // a rejected play() is not a missing file — onError handles that
+          video.play().then(() => setPlaying(true)).catch(() => {})
         } else {
           video.pause()
         }

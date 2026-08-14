@@ -92,7 +92,7 @@ export default function CV() {
   usePageTitle('CV')
 
   return (
-    <div className="mx-auto grid max-w-[1200px] gap-[clamp(28px,4vw,64px)] px-[clamp(20px,4vw,72px)] pb-[clamp(64px,9vh,112px)] pt-[clamp(64px,9vh,96px)] md:grid-cols-[minmax(220px,300px)_1fr]">
+    <div className="cv-grid mx-auto grid max-w-[1200px] gap-[clamp(28px,4vw,64px)] px-[clamp(20px,4vw,72px)] pb-[clamp(64px,9vh,112px)] pt-[clamp(64px,9vh,96px)] md:grid-cols-[minmax(220px,300px)_1fr]">
       {/* rail */}
       <aside className="no-print md:sticky md:top-[70px] md:self-start">
         <h1 className="text-title-m font-medium text-[var(--text-hi)]">Eoin Forrest</h1>
@@ -142,6 +142,15 @@ export default function CV() {
 
       {/* the document */}
       <div className="cv-doc min-w-0">
+        {/* print carries its own header, since the rail is screen-only */}
+        <header className="cv-print-header hidden print:block">
+          <h2 className="text-[20px] font-medium text-[var(--text-hi)]">Eoin Forrest</h2>
+          <p className="mt-1 font-mono text-[10px] text-[var(--text-lo)]">
+            Forrest.Eoin@gmail.com · 07484 835722 · linkedin.com/in/eoin-forrest · github.com/NotEoin · eoinforrest.me
+            <br />
+            London / Newcastle · open to relocation · UK &amp; Irish citizen (no visa sponsorship required)
+          </p>
+        </header>
         <section className="cv-section pb-[clamp(28px,4vh,44px)]">
           <p className="max-w-[68ch] text-body-l text-[var(--text-hi)]">
             First-class Computer Science graduate from Newcastle University seeking a graduate software

@@ -170,7 +170,7 @@ export const projects: Project[] = [
       src: '/media/hal/vault-graph.mp4',
       poster: '/media/hal/vault-graph-poster.jpg',
       width: 1920,
-      height: 1080,
+      height: 1040,
       label: 'VAULT GRAPH — the Obsidian vault graph growing during import',
     },
   },
