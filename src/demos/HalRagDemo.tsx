@@ -52,7 +52,9 @@ const QUESTIONS: { q: string; vec: Vec; answer: string; cites: string[] }[] = [
     answer: 'Only the closest passages are retrieved, and the model is constrained to answer from those passages and cite each one — or to say plainly that the notes do not cover the question.',
     cites: ['Retrieval over stuffing'] },
   { q: 'What made retrieval quality worse?',
-    vec: v({ index: 1, retrieval: .5 }),
+    // a deliberately diffuse query — it brushes every topic the way vague
+    // questions do, which is exactly when an indexed dashboard wins the ranking
+    vec: v({ index: .8, retrieval: .3, context: .3, model: .25, gpu: .3, voice: .25, latency: .25, vault: .35 }),
     answer: 'Indexing everything. Dashboards and index shells mention every topic in a few words, so they rank well against almost any query while containing nothing useful. Skipping them was the single biggest quality improvement, and it was a content decision rather than a model one.',
     cites: ['Skip the shells'] },
   { q: 'Why does speech-to-text run on the CPU?',

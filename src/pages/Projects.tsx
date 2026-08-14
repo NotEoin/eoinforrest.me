@@ -10,7 +10,7 @@ const FILTERS: (Category | 'All')[] = ['All', 'Systems', 'AI / ML', 'Networking'
 function Row({ p }: { p: Project }) {
   const inner = (
     <div
-      className="grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-4 gap-y-1 border-t border-[var(--line)]
+      className="pointer-events-none grid grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-4 gap-y-1 border-t border-[var(--line)]
                  py-5 transition-[border-color,transform] duration-[180ms] ease-out
                  group-hover:translate-x-1 group-hover:border-[var(--line-2)]
                  md:grid-cols-[2.5rem_minmax(14ch,18ch)_1fr_minmax(12ch,16ch)_5.5rem_auto_1.5rem]"
@@ -42,8 +42,7 @@ function Row({ p }: { p: Project }) {
           target="_blank"
           rel="noreferrer"
           aria-label={`${p.name} repository on GitHub`}
-          onClick={e => e.stopPropagation()}
-          className="hidden justify-self-end text-[var(--text-lo)] hover:text-[var(--accent)] md:block"
+          className="pointer-events-auto relative z-10 hidden justify-self-end text-[var(--text-lo)] hover:text-[var(--accent)] md:block"
         >
           <ArrowUpRight />
         </a>
@@ -53,14 +52,19 @@ function Row({ p }: { p: Project }) {
     </div>
   )
 
-  // row 09 has no page — it stays a row, not a dead link
-  if (!p.hasPage) {
-    return <div className="group block">{inner}</div>
-  }
+  // row 09 has no page — it stays a row, not a dead link. The row link is a
+  // stretched overlay so the repo anchor never nests inside another anchor.
   return (
-    <Link to={`/projects/${p.slug}`} className="group block focus-visible:outline-offset-[-2px]">
+    <div className="group relative block">
+      {p.hasPage && (
+        <Link
+          to={`/projects/${p.slug}`}
+          aria-label={`${p.name} — open the write-up`}
+          className="absolute inset-0 z-0 focus-visible:outline-offset-[-2px]"
+        />
+      )}
       {inner}
-    </Link>
+    </div>
   )
 }
 
