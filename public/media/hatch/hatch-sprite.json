@@ -1,0 +1,24 @@
+{
+  "frame": {
+    "w": 32,
+    "h": 32
+  },
+  "frames": 4,
+  "facing": "right",
+  "fps": 8,
+  "face": {
+    "eyeL": [
+      17,
+      13
+    ],
+    "eyeR": [
+      22,
+      13
+    ],
+    "mouth": [
+      19,
+      18
+    ]
+  },
+  "source": "mature.png row 1 (right-facing), 64px frames downscaled to 32px"
+}

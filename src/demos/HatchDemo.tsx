@@ -31,11 +31,24 @@ const FACE: Record<Mood, { eye: number; brow: number; mouth: number }> = {
   bright:   { eye: 1.3, brow: -1,   mouth: 2 },
 };
 
+/** the real walk-cycle sheet — the mature body, faceless, exported from the
+ *  app's sprites — with the face composited at runtime from the anchor table
+ *  in hatch-sprite.json, exactly as the app does it */
+const SHEET = '/media/hatch/hatch-sprite.png';
+const ANCHOR = { eyeL: [17, 13], eyeR: [22, 13], mouth: [19, 18] } as const;
+
 export default function HatchDemo() {
   const { ref: hostRef, inView } = useInView<HTMLDivElement>();
   const reduced = usePrefersReducedMotion();
   const stageRef = useRef<HTMLDivElement>(null);
   const spriteRef = useRef<HTMLDivElement>(null);
+  const [sheetOk, setSheetOk] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setSheetOk(true);
+    img.src = SHEET;
+  }, []);
 
   const [mood, setMood] = useState<Mood>('curious');
   const [docked, setDocked] = useState<0 | 1>(1);       // 0 = docked (Wayland fallback), 1 = roaming
@@ -109,17 +122,48 @@ export default function HatchDemo() {
   }, [released, reduced]);
 
   const f = FACE[mood];
-  const Sprite = ({ scale = 1 }: { scale?: number }) => (
-    <svg width={32 * scale} height={32 * scale} viewBox="0 0 32 32" shapeRendering="crispEdges" aria-hidden="true">
-      {/* placeholder sprite: replace with /media/hatch/hatch-sprite.png (128×32, 4 frames) */}
-      <rect x="8" y="10" width="16" height="14" fill={TINT} />
-      <rect x="10" y="24" width="4" height="3" fill={TINT} />
-      <rect x="18" y="24" width="4" height="3" fill={TINT} />
-      <rect x={12} y={14 + f.brow} width={2 * f.eye} height="2" fill="#0a0b0d" />
-      <rect x={18} y={14 + f.brow} width={2 * f.eye} height="2" fill="#0a0b0d" />
-      <rect x="14" y={19 - f.mouth * 0.5} width="4" height="1.5" fill="#0a0b0d" />
-    </svg>
-  );
+  const Sprite = ({ scale = 1 }: { scale?: number }) =>
+    sheetOk ? (
+      <span
+        aria-hidden="true"
+        className="relative block"
+        style={{ width: 32 * scale, height: 32 * scale, ['--sheet-w' as string]: `${128 * scale}px` }}
+      >
+        <span
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${SHEET})`,
+            backgroundSize: `${128 * scale}px ${32 * scale}px`,
+            imageRendering: 'pixelated',
+            animation: reduced ? 'none' : 'hatch-walk 0.5s steps(4) infinite',
+          }}
+        />
+        {/* the face, composited over the faceless body at the anchor points */}
+        <span className="absolute" style={{
+          left: ANCHOR.eyeL[0] * scale, top: (ANCHOR.eyeL[1] + f.brow) * scale,
+          width: 2 * f.eye * scale, height: 2 * scale, background: '#4a322b',
+        }} />
+        <span className="absolute" style={{
+          left: ANCHOR.eyeR[0] * scale, top: (ANCHOR.eyeR[1] + f.brow) * scale,
+          width: 2 * f.eye * scale, height: 2 * scale, background: '#4a322b',
+        }} />
+        <span className="absolute" style={{
+          left: ANCHOR.mouth[0] * scale, top: (ANCHOR.mouth[1] - f.mouth * 0.5) * scale,
+          width: 3 * scale, height: 1.5 * scale, background: '#4a322b',
+        }} />
+        <style>{'@keyframes hatch-walk { to { background-position-x: calc(var(--sheet-w) * -1); } }'}</style>
+      </span>
+    ) : (
+      <svg width={32 * scale} height={32 * scale} viewBox="0 0 32 32" shapeRendering="crispEdges" aria-hidden="true">
+        {/* the visible stand-in until the sheet loads */}
+        <rect x="8" y="10" width="16" height="14" fill={TINT} />
+        <rect x="10" y="24" width="4" height="3" fill={TINT} />
+        <rect x="18" y="24" width="4" height="3" fill={TINT} />
+        <rect x={12} y={14 + f.brow} width={2 * f.eye} height="2" fill="#0a0b0d" />
+        <rect x={18} y={14 + f.brow} width={2 * f.eye} height="2" fill="#0a0b0d" />
+        <rect x="14" y={19 - f.mouth * 0.5} width="4" height="1.5" fill="#0a0b0d" />
+      </svg>
+    );
 
   return (
     <div ref={hostRef}>

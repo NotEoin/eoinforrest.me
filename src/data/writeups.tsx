@@ -47,11 +47,11 @@ export const writeups: Record<string, Writeup> = {
           </p>
           <Figure
             src="/media/lidar/debug-annotated.png"
-            ratio="16/10"
-            alt="The in-game debug screen, annotated: corridor, ghost track, obstacle cells, laser beams and the vehicle marker"
-            caption="The debug screen — corridor, ghost track, obstacle cells, beams, vehicle"
+            ratio="1200/653"
+            alt="The in-game debug screen, annotated: planned route, predicted track, laser beams, mapped bank and the boat"
+            caption="The debug screen — planned route, predicted track, beams, mapped bank, the boat"
             tint="var(--tint-lidar)"
-            size="1600×1000"
+            size="1200×653"
           />
         </ProseBlock>
       </>
@@ -138,11 +138,11 @@ export const writeups: Record<string, Writeup> = {
           </p>
           <Figure
             src="/media/hatch/hatch-faces.png"
-            ratio="2/1"
+            ratio="1000/744"
             alt="Eight demeanours composited on one body, labelled"
             caption="Eight demeanours, one body — faces are composited at runtime"
             tint="var(--tint-hatch)"
-            size="1200×600"
+            size="1000×744"
           />
         </ProseBlock>
       </>
@@ -322,7 +322,7 @@ export const writeups: Record<string, Writeup> = {
           </p>
           <Figure
             src="/media/hal-voice/hal-voice-interface.png"
-            ratio="1/1"
+            ratio="530/567"
             alt="The pygame lens window, idle"
             caption="The pygame window, idle"
             tint="var(--tint-halvoice)"
@@ -569,11 +569,11 @@ export const writeups: Record<string, Writeup> = {
           </p>
           <Figure
             src="/media/canvas/linked-files.png"
-            ratio="4/3"
+            ratio="1215/492"
             alt="Files resolved out of page HTML, sorted into course folders"
             caption="Linked materials resolved out of page HTML — course names are placeholders"
             tint="var(--tint-util)"
-            size="1200×900"
+            size="1215×492"
           />
         </ProseBlock>
       </>
@@ -615,11 +615,11 @@ export const writeups: Record<string, Writeup> = {
           </p>
           <Figure
             src="/media/jupyter/behaviour.png"
-            ratio="3/2"
+            ratio="1215/480"
             alt="The announcement rules by cell runtime"
             caption="Announcement rules by cell runtime"
             tint="var(--tint-util)"
-            size="1200×800"
+            size="1215×480"
           />
         </ProseBlock>
       </>

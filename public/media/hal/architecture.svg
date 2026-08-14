@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 300" font-family="'Geist Mono','SFMono-Regular',Menlo,monospace" font-size="12">
+  <!-- hairline rects, lines and mono labels only — no icons, no gradients -->
+  <rect width="880" height="300" fill="oklch(0.11 0.006 264)"/>
+
+  <!-- rank 1: hal launcher -> Claude Code -> Ollama (local model) -->
+  <g fill="none" stroke="rgba(255,255,255,0.14)">
+    <rect x="60" y="46" width="148" height="56" rx="8"/>
+    <rect x="366" y="46" width="148" height="56" rx="8" stroke="oklch(0.88 0.04 88 / 0.55)"/>
+    <rect x="672" y="46" width="148" height="56" rx="8"/>
+  </g>
+  <g fill="none" stroke="rgba(255,255,255,0.22)">
+    <path d="M208 74 H360"/>
+    <path d="M514 74 H666"/>
+  </g>
+  <g fill="rgba(255,255,255,0.35)">
+    <path d="M366 74 l-8 -4.5 v9 z"/>
+    <path d="M672 74 l-8 -4.5 v9 z"/>
+  </g>
+
+  <!-- rank 2: slash commands -> vault (markdown) -> vault-index.py -> .rag vectors -> ask.py / hal-mcp.py -->
+  <g fill="none" stroke="rgba(255,255,255,0.14)">
+    <rect x="20" y="196" width="140" height="56" rx="8"/>
+    <rect x="196" y="196" width="140" height="56" rx="8" stroke="oklch(0.88 0.04 88 / 0.55)"/>
+    <rect x="372" y="196" width="140" height="56" rx="8"/>
+    <rect x="548" y="196" width="140" height="56" rx="8"/>
+    <rect x="724" y="196" width="140" height="56" rx="8"/>
+  </g>
+  <g fill="none" stroke="rgba(255,255,255,0.22)">
+    <path d="M160 224 H190"/>
+    <path d="M336 224 H366"/>
+    <path d="M512 224 H542"/>
+    <path d="M688 224 H718"/>
+  </g>
+  <g fill="rgba(255,255,255,0.35)">
+    <path d="M196 224 l-8 -4.5 v9 z"/>
+    <path d="M372 224 l-8 -4.5 v9 z"/>
+    <path d="M548 224 l-8 -4.5 v9 z"/>
+    <path d="M724 224 l-8 -4.5 v9 z"/>
+  </g>
+
+  <!-- the dashed memory edge: vault up to Claude Code -->
+  <path d="M266 196 V132 H440 V108" fill="none" stroke="rgba(255,255,255,0.22)" stroke-dasharray="3 4"/>
+  <path d="M440 102 l-4.5 8 h9 z" fill="rgba(255,255,255,0.35)"/>
+
+  <!-- node labels -->
+  <g fill="#c0c2c6">
+    <text x="134" y="78" text-anchor="middle">hal launcher</text>
+    <text x="440" y="78" text-anchor="middle">Claude Code</text>
+    <text x="746" y="70" text-anchor="middle">Ollama</text>
+    <text x="746" y="88" text-anchor="middle" fill="#8d9096" font-size="10.5">local model</text>
+    <text x="90" y="220" text-anchor="middle">slash</text>
+    <text x="90" y="238" text-anchor="middle">commands</text>
+    <text x="266" y="220" text-anchor="middle">vault</text>
+    <text x="266" y="238" text-anchor="middle" fill="#8d9096" font-size="10.5">markdown</text>
+    <text x="442" y="228" text-anchor="middle">vault-index.py</text>
+    <text x="618" y="228" text-anchor="middle">.rag vectors</text>
+    <text x="794" y="220" text-anchor="middle">ask.py</text>
+    <text x="794" y="238" text-anchor="middle">hal-mcp.py</text>
+  </g>
+
+  <!-- edge labels -->
+  <g fill="#8d9096" font-size="9.5" letter-spacing="1">
+    <text x="284" y="64" text-anchor="middle">DRIVES</text>
+    <text x="590" y="64" text-anchor="middle">GENERATES WITH</text>
+    <text x="352" y="126">MEMORY</text>
+    <text x="178" y="188" text-anchor="middle">WORK</text>
+    <text x="354" y="188" text-anchor="middle">EMBED</text>
+    <text x="530" y="188" text-anchor="middle">WRITE</text>
+    <text x="706" y="188" text-anchor="middle">READ</text>
+  </g>
+</svg>
