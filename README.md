@@ -33,6 +33,8 @@ npm run dev
 
 - Every asset that doesn't exist yet renders as a visible placeholder at its real path and aspect
   ratio, so swapping the file in needs no layout change.
+- The act 02 plate is recorded from the real Hatch app — see
+  [`tools/capture-hatch-roam`](tools/capture-hatch-roam/README.md) to shoot it again.
 - All project data — repo URLs, tints, status, media paths — lives in `src/data/projects.ts`.
 - The zero-shot CXR page is built but gated (`published: false`) until supervisor sign-off.
 - The contact form posts to Formspree once a public form id is set in
