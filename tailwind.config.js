@@ -6,7 +6,7 @@ export default {
       fontFamily: {
         sans: ['Geist', 'system-ui', 'sans-serif'],
         mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        serif: ['Fraunces', 'Georgia', 'serif'],
       },
       fontSize: {
         'display-xl': ['clamp(2.75rem, 6.2vw, 6rem)', { lineHeight: '0.96', letterSpacing: '-0.03em' }],

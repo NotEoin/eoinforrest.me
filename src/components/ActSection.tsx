@@ -9,7 +9,11 @@ const supportsSDA =
 
 export interface ActCopy {
   eyebrow: string
+  /** the project's own name — nothing else belongs in the display line */
   title: string
+  /** the hero line from the project's README, verbatim */
+  tagline: string
+  /** the README's opening paragraph */
   hook: string
   stackRow: string
   align: 'left' | 'right' | 'full'
@@ -20,6 +24,13 @@ export interface ActCopy {
  * CSS view-timeline where supported; elsewhere the title falls back to a
  * Framer Motion whileInView reveal and the plate stays static — composed
  * either way, no hard cuts.
+ *
+ * The copy is a four-tier ladder: mono eyebrow, the project name at display
+ * size, the README hero line as an italic serif standfirst, then the
+ * description. Fraunces italic 500 is the only italic face in the build and
+ * is used nowhere else, which is what keeps the standfirst from reading as
+ * another paragraph of body copy. Its optical-size axis is left on auto, so
+ * the face tightens itself as the clamp scales the line up.
  */
 export default function ActSection({
   project,
@@ -47,6 +58,10 @@ export default function ActSection({
     full ? '!max-w-none self-end' : right ? 'justify-self-end text-right' : ''
   }`
 
+  // the standfirst runs a touch wider than the description so a long hero line
+  // breaks into two lines rather than four
+  const push = right && !full ? 'ml-auto max-md:ml-0' : ''
+
   const inner = (
     <>
       <p className="m-0 mb-5 font-mono text-mono-label uppercase" style={{ color: project.tint }}>
@@ -61,9 +76,15 @@ export default function ActSection({
       >
         {copy.title}
       </h2>
+      <p
+        className={`m-0 mt-[18px] font-serif text-[clamp(1.3125rem,2.05vw,1.75rem)] font-medium italic
+                    leading-[1.28] text-[var(--text-hi)] ${full ? 'max-w-[46ch]' : 'max-w-[42ch]'} ${push}`}
+      >
+        {copy.tagline}
+      </p>
       {full ? (
         <div className="mt-7 grid max-w-[100ch] gap-[clamp(20px,3vw,56px)] [grid-template-columns:repeat(auto-fit,minmax(min(100%,26ch),1fr))]">
-          <p className="m-0 text-body-l text-[var(--text-md)]">{copy.hook}</p>
+          <p className="m-0 text-body-m text-[var(--text-md)]">{copy.hook}</p>
           <div>
             <p className="m-0 font-mono text-[12px] text-[var(--text-lo)]">{copy.stackRow}</p>
             <ActLinks project={project} right={false} />
@@ -71,7 +92,7 @@ export default function ActSection({
         </div>
       ) : (
         <>
-          <p className={`m-0 mt-[22px] max-w-[48ch] text-body-l text-[var(--text-md)] ${right ? 'ml-auto max-md:ml-0' : ''}`}>
+          <p className={`m-0 mt-[18px] max-w-[48ch] text-body-m text-[var(--text-md)] ${push}`}>
             {copy.hook}
           </p>
           <p className="m-0 mt-[22px] font-mono text-[12px] text-[var(--text-lo)]">{copy.stackRow}</p>
