@@ -76,7 +76,7 @@ export const projects: Project[] = [
     slug: 'hatch',
     index: '02',
     name: 'Hatch',
-    hook: 'A desktop pet that leaves the window and roams your screen',
+    hook: 'A mood tracker whose creature leaves the window and roams your desktop',
     stack: ['Electron', 'TS', 'SQLite'],
     year: '2026',
     status: 'Works',

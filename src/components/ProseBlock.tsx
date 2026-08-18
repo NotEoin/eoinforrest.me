@@ -34,3 +34,13 @@ export function Decision({ title, children }: { title: string; children?: ReactN
     </div>
   )
 }
+
+/** Inline code inside prose — mono, at the high-contrast text weight. */
+export function Code({ children }: { children: ReactNode }) {
+  return <code className="font-mono text-mono-data text-[var(--text-hi)]">{children}</code>
+}
+
+/** The claim a paragraph goes on to support. Emphasis, not shouting. */
+export function Key({ children }: { children: ReactNode }) {
+  return <strong className="font-medium text-[var(--text-hi)]">{children}</strong>
+}

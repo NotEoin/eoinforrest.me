@@ -93,7 +93,13 @@ export default function StatusNav() {
           </span>
         </Link>
         <span className="hidden items-center gap-1.5 font-mono text-[11px] text-[var(--text-lo)] sm:flex">
-          eoinforrest.me
+          <Link
+            to="/"
+            aria-label="eoinforrest.me — home"
+            className="transition-colors duration-[120ms] hover:text-[var(--text-hi)]"
+          >
+            eoinforrest.me
+          </Link>
           <span className="text-[var(--line-2)]">/</span>
           <span className="text-[var(--text-md)]">{routeSegment}</span>
           <span aria-hidden="true" className="caret-blink text-[var(--accent)]">▍</span>

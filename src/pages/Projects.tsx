@@ -78,8 +78,8 @@ export default function Projects() {
       <header className="max-w-[1200px]">
         <p className="m-0 font-mono text-mono-label uppercase text-[var(--text-lo)]">// All projects</p>
         <h1 className="mt-4 max-w-[52ch] text-body-l text-[var(--text-hi)]">
-          Eight personal projects, plus a team one. Each is a repository with a README that explains the
-          reasoning, not just the setup.
+          Personal projects, plus one built in a university team. Each is a repository with a README that
+          explains the reasoning, not just the setup.
         </h1>
         <div className="mt-8 flex flex-wrap gap-1.5" role="group" aria-label="Filter projects">
           {FILTERS.map(f => (
