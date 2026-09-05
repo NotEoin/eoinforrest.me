@@ -77,8 +77,7 @@ export default function StatusNav() {
     <nav
       aria-label="Primary"
       className="liquid-glass-strong fixed inset-x-0 top-0 z-50 flex h-[46px] items-stretch rounded-none
-                 border-b border-[var(--line)] pl-[clamp(10px,2vw,16px)]
-                 gap-[clamp(10px,2vw,24px)]"
+                 pl-[clamp(10px,2vw,16px)] gap-[clamp(10px,2vw,24px)]"
       style={{ overflow: 'visible' }}
     >
       <span className="flex flex-none items-center gap-2.5">
