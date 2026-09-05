@@ -172,6 +172,7 @@ export const projects: Project[] = [
     plate: {
       kind: 'video',
       src: '/media/hal/vault-graph.mp4',
+      webm: '/media/hal/vault-graph.webm',
       poster: '/media/hal/vault-graph-poster.jpg',
       width: 1920,
       height: 1040,
