@@ -238,7 +238,7 @@ export const projects: Project[] = [
     categories: ['Tools'],
     tint: 'var(--tint-util)',
     repo: `${GITHUB}/jupyter-tts-alerts`,
-    licence: null,
+    licence: 'MIT',
     role: 'Sole developer',
     published: true,
     hasPage: true,
