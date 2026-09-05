@@ -9,7 +9,7 @@
   --text-md: oklch(0.78 0.006 264);
   --text-lo: oklch(0.62 0.008 264);
   --accent: oklch(0.80 0.13 196);      /* the ONLY site accent */
-  --accent-2: oklch(0.80 0.13 92);     /* annotation inside demos only */
+  --accent-2: oklch(0.80 0.13 92);     /* the Prototype status pill only */
   --tint-lidar: oklch(0.82 0.15 150);
   --tint-halvoice: oklch(0.62 0.20 27);
   --tint-hatch: oklch(0.82 0.13 74);
@@ -25,8 +25,8 @@
 }
 
 /* ------------------------------------------------- the glass layer.
-   Allowed on exactly three things: the nav status line, chips over media,
-   and demo toolbars/readouts. Nowhere else. */
+   Allowed on exactly two things: the nav status line, and chips over
+   media. Nowhere else. */
 .liquid-glass {
   background: rgba(255, 255, 255, 0.01);
   background-blend-mode: luminosity;

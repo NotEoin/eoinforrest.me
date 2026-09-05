@@ -6,7 +6,6 @@
 
 export type Status = 'Works' | 'Prototype' | 'Partial' | 'Submitted'
 export type Category = 'Systems' | 'AI / ML' | 'Networking' | 'Applications' | 'Tools'
-export type DemoKey = 'lidar' | 'sniffer' | 'halvoice' | 'halrag' | 'hatch'
 
 export interface PlateMedia {
   kind: 'video' | 'image' | 'lens'
@@ -36,7 +35,6 @@ export interface Project {
   published: boolean
   /** false gives a row on /projects but no page behind it */
   hasPage: boolean
-  demo?: DemoKey
   related: string[]
   plate?: PlateMedia
 }
@@ -61,7 +59,6 @@ export const projects: Project[] = [
     role: 'Sole developer',
     published: true,
     hasPage: true,
-    demo: 'lidar',
     related: [],
     plate: {
       kind: 'video',
@@ -88,7 +85,6 @@ export const projects: Project[] = [
     role: 'Sole developer',
     published: true,
     hasPage: true,
-    demo: 'hatch',
     related: [],
     // The check-in take: the creature leaves the window, asks you to check in
     // from the middle of the desktop, and walks back to open the panel. Loops
@@ -119,7 +115,6 @@ export const projects: Project[] = [
     role: 'Sole developer',
     published: true,
     hasPage: true,
-    demo: 'sniffer',
     related: [],
     plate: {
       kind: 'image',
@@ -144,13 +139,12 @@ export const projects: Project[] = [
     role: 'Sole developer',
     published: true,
     hasPage: true,
-    demo: 'halvoice',
     related: ['hal'],
     plate: {
       kind: 'lens',
       width: 900,
       height: 900,
-      label: 'THE LENS — rendered live from the demo component',
+      label: 'THE LENS — drawn live on canvas, a port of the repo ui_eye.py',
     },
   },
   {
@@ -168,7 +162,6 @@ export const projects: Project[] = [
     role: 'Sole developer',
     published: true,
     hasPage: true,
-    demo: 'halrag',
     related: ['hal-voice', 'canvas-downloader'],
     plate: {
       kind: 'video',

@@ -1,23 +1,13 @@
-import { Suspense, lazy } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { m } from 'framer-motion'
 import usePageTitle from '../lib/usePageTitle'
 import MetaGrid from '../components/MetaGrid'
 import MediaPlate from '../components/MediaPlate'
-import LazyMount from '../components/LazyMount'
 import Reveal from '../components/Reveal'
 import { ArrowUpRight } from '../components/Icons'
-import { DemoKey, bySlug, projects } from '../data/projects'
+import { bySlug, projects } from '../data/projects'
 import { writeups } from '../data/writeups'
 import NotFound from './NotFound'
-
-const DEMOS: Record<DemoKey, React.LazyExoticComponent<React.ComponentType<object>>> = {
-  lidar: lazy(() => import('../demos/LidarDemo')),
-  sniffer: lazy(() => import('../demos/SnifferDemo')),
-  halvoice: lazy(() => import('../demos/HalVoiceDemo')),
-  halrag: lazy(() => import('../demos/HalRagDemo')),
-  hatch: lazy(() => import('../demos/HatchDemo')),
-}
 
 export default function ProjectPage() {
   const { slug } = useParams()
@@ -28,7 +18,6 @@ export default function ProjectPage() {
   if (!project || !project.published || !project.hasPage) return <NotFound />
 
   const writeup = writeups[project.slug]
-  const Demo = project.demo ? DEMOS[project.demo] : null
   const related = project.related
     .map(s => projects.find(p => p.slug === s))
     .filter(p => p && p.published && p.hasPage)
@@ -62,29 +51,6 @@ export default function ProjectPage() {
 
         <div className="mt-6">
           {writeup?.before}
-
-          {/* the demo, where a reader is most curious */}
-          {Demo && (
-            <section id="demo" className="border-t border-[var(--line)] py-[clamp(40px,6vh,72px)]">
-              <h2 className="mb-7 font-mono text-mono-label uppercase text-[var(--text-lo)]">// The demo</h2>
-              <LazyMount>
-                <Suspense
-                  fallback={
-                    <div
-                      className="grid place-items-center rounded-[20px] border border-[var(--line)] bg-[var(--ink-050)]
-                                 font-mono text-[11px] uppercase tracking-[.12em] text-[var(--text-lo)]"
-                      style={{ aspectRatio: '16 / 10', minHeight: 420 }}
-                    >
-                      Loading the demo…
-                    </div>
-                  }
-                >
-                  <Demo />
-                </Suspense>
-              </LazyMount>
-            </section>
-          )}
-
           {writeup?.after}
 
           {/* related */}

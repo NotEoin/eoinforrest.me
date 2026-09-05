@@ -12,7 +12,7 @@ import { projects } from '../data/projects'
 export const SITE_URL = 'https://eoinforrest.me'
 
 export const DEFAULT_DESCRIPTION =
-  'Computer Science graduate (First-Class, Newcastle). Backend, systems and applied-AI projects, with playable demos.'
+  'Computer Science graduate (First-Class, Newcastle). Backend, systems and applied-AI projects, each with a write-up.'
 
 export interface RouteMeta {
   path: string

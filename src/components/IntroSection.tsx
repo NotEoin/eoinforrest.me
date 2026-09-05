@@ -53,8 +53,7 @@ export default function IntroSection() {
           >
             A first-class BSc from Newcastle University, 2026. Most of what I build sits close to the
             machine: local retrieval-augmented assistants, real-time control systems, passive network
-            sensing. This site is the working record — seven projects, the reasoning behind each one, and
-            demos you can operate where a demo helps.
+            sensing. This site is the working record — seven projects and the reasoning behind each one.
           </p>
           <dl
             className="enter m-0 mt-[26px] grid grid-cols-[auto_1fr] gap-x-5 gap-y-1.5 font-mono text-mono-data leading-[1.7]"

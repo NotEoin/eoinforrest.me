@@ -152,11 +152,6 @@ function ActLinks({ project, right }: { project: Project; right: boolean }) {
       <Link to={`/projects/${project.slug}`} className="text-[var(--text-hi)] hover:text-[var(--accent)]">
         Open project →
       </Link>
-      {project.demo && (
-        <Link to={`/projects/${project.slug}#demo`} className="text-[var(--text-md)] hover:text-[var(--accent)]">
-          Try the demo →
-        </Link>
-      )}
     </div>
   )
 }

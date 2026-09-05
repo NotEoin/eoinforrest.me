@@ -6,8 +6,8 @@ import Figure from '../components/Figure'
  * The long-form prose for every project page, kept in step with each
  * repository's README so the site and the repo never drift apart.
  *
- * `before` renders above the demo (why it exists, the hard part);
- * `after` renders below it (decisions, what didn't work, current state).
+ * `before` opens the write-up (why it exists, the hard part);
+ * `after` closes it (decisions, what didn't work, current state).
  */
 export interface Writeup {
   before: ReactNode
