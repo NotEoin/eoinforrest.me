@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
@@ -11,10 +11,19 @@ if (CSS.supports('animation-timeline: view()')) {
   document.documentElement.classList.add('sda')
 }
 
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!
+
+const tree = (
   <StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </StrictMode>,
+  </StrictMode>
 )
+
+// the prerender leaves markup in #root; hydrate it rather than throwing it away
+if (root.hasChildNodes()) {
+  hydrateRoot(root, tree)
+} else {
+  createRoot(root).render(tree)
+}
