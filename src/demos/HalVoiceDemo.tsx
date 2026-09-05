@@ -51,7 +51,7 @@ const TIMELINES = {
   ],
 } as const;
 
-export default function HalVoiceDemo({ hasSample = false }: { hasSample?: boolean }) {
+export default function HalVoiceDemo({ hasSample = true }: { hasSample?: boolean }) {
   const { ref: hostRef, inView } = useInView<HTMLDivElement>();
   const reduced = usePrefersReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -211,7 +211,9 @@ export default function HalVoiceDemo({ hasSample = false }: { hasSample?: boolea
             </button>
             {hasSample && (
               <button type="button"
-                onClick={() => new Audio('/media/hal-voice/hal-voice-sample.mp3').play()}
+                // browsers reject play() when the gesture isn't trusted; the
+                // button is decorative enough that failing silently is right
+                onClick={() => { void new Audio('/media/hal-voice/hal-voice-sample.mp3').play().catch(() => {}) }}
                 className="rounded-full border border-[var(--line-2)] px-3 py-1.5 font-mono text-[11px]
                            uppercase tracking-[.12em] text-[var(--text-md)] hover:text-[var(--text-hi)]">
                 Play the voice ⏵
