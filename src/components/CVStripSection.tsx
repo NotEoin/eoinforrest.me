@@ -8,7 +8,7 @@ const ROWS: [string, React.ReactNode][] = [
     <>
       BSc (Hons) Computer Science — First-Class Honours
       <br />
-      <span className="text-[var(--text-md)]">Newcastle University · 2023–2026 · BCS accredited</span>
+      <span className="text-[var(--text-md)]">Newcastle University · 2023–2026</span>
     </>,
   ],
   [

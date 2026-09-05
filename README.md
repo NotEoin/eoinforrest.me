@@ -36,4 +36,9 @@ npm run dev
 - The zero-shot CXR page is built but gated (`published: false`) until supervisor sign-off.
 - The contact form posts to Formspree once a public form id is set in
   `src/components/ContactSection.tsx`; until then it falls back to composing an email.
-- The CV page and the PDF are updated in the same commit, always.
+- The CV lives in [`src/data/cv.json`](src/data/cv.json). The `/cv` page and
+  `public/Eoin-Forrest-CV.pdf` both read it, so they cannot say different things. Edit the JSON,
+  then run `python3 tools/build-cv-pdf.py` and commit both. The content is ASCII by rule and the
+  PDF build fails on the first non-ASCII byte.
+- Only the contact block differs between the two: the email is assembled in the browser so it
+  stays out of the prerendered HTML, and the phone number is in the PDF alone.

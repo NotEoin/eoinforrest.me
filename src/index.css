@@ -225,10 +225,12 @@ a { color: inherit; text-decoration: none; }
   .cv-doc .space-y-8 > * + * { margin-top: 10px !important; }
   .cv-doc .space-y-7 > * + * { margin-top: 8px !important; }
   .cv-doc .space-y-5 > * + * { margin-top: 6px !important; }
+  .cv-doc .space-y-3 > * + * { margin-top: 4px !important; }
   .cv-doc .space-y-2\.5 > * + * { margin-top: 4px !important; }
   .cv-doc .gap-8 { gap: 16px !important; }
   .cv-doc .mt-7 { margin-top: 10px !important; }
   .cv-doc .mt-9 { margin-top: 12px !important; }
+  .cv-doc .mt-8 { margin-top: 11px !important; }
   .cv-doc .mt-5 { margin-top: 8px !important; }
   .cv-doc .mb-3 { margin-bottom: 6px !important; }
   .cv-doc dd span, .cv-doc dd { font-size: 10px; }

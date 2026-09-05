@@ -1,0 +1,127 @@
+{
+  "_comment": [
+    "The canonical CV content. Read by src/pages/CV.tsx and by tools/build-cv-pdf.py,",
+    "so the page at /cv and the PDF at /Eoin-Forrest-CV.pdf cannot say different things.",
+    "Edit here, then run: python3 tools/build-cv-pdf.py",
+    "",
+    "ASCII only, by rule - no em dashes, no smart quotes, no arrows. The PDF build",
+    "asserts it and fails on the first non-ASCII byte.",
+    "",
+    "**bold** is the only markup, and only for the lead-in of a paragraph.",
+    "",
+    "Contact details are deliberately absent. The email is assembled at runtime",
+    "(src/lib/email.ts) so it never lands in the prerendered HTML, and the phone",
+    "number lives in the PDF generator only - see the note there."
+  ],
+
+  "title": "Computer Science graduate - backend, systems and applied AI",
+
+  "summary": "First-class Computer Science graduate from Newcastle University, seeking a graduate software engineering role. I build backend, systems and applied-AI software, and I implement the hard parts from first principles: a tick-sliced A* planner inside a microcontroller character budget, a NumPy vector store behind a fully offline RAG assistant, an 802.11 fingerprint clusterer that counts devices through MAC randomisation. I care about clean, well-documented code and about things working end to end.",
+
+  "education": [
+    {
+      "qualification": "BSc (Hons) Computer Science, First-Class Honours",
+      "meta": "Newcastle University | Sep 2023 - Jun 2026",
+      "detail": "**Dissertation, From Latent Concept Vectors to Anatomy-Conditioned Dense Readouts:** a falsification-driven study of whether frozen CLIP-family vision-language models can segment chest-X-ray pathology at the pixel level with no training masks. Built a 247-cell reproducible PyTorch pipeline across four public datasets and three backbones, guarded patient-ID leakage between splits by hard assertion, evaluated with paired bootstrap confidence intervals and FDR correction, and benchmarked head-to-head against a re-run of MedCLIP-SAMv2, winning on 8 of 9 held-out pathologies by median Dice. Negative and data-limited results are reported in full."
+    },
+    {
+      "qualification": "Access to Higher Education Diploma: Computing",
+      "meta": "Kingston College | Sep 2022 - Jul 2023",
+      "detail": "30 units at Distinction, 15 at Merit. Covered C#, SQL database design and implementation, HTML and CSS, systems analysis, and TCP/IP networking."
+    }
+  ],
+
+  "modules": [
+    {
+      "year": "Final year",
+      "rows": [
+        ["Cryptography", 80],
+        ["System & Network Security", 79],
+        ["Distributed Systems", 76],
+        ["Computer Vision & AI", 68],
+        ["Major Project & Dissertation", 66]
+      ]
+    },
+    {
+      "year": "Second year",
+      "rows": [
+        ["Algorithm Design & Analysis", 86],
+        ["Software Systems Design & Implementation", 79],
+        ["Security Programming", 77],
+        ["Software Engineering Team Project", 73],
+        ["Contemporary Topics in Computing", 61]
+      ]
+    },
+    {
+      "year": "First year",
+      "rows": [
+        ["Computer Systems Design & Architectures", 96],
+        ["Programming Portfolio - Python", 85],
+        ["Programming Portfolio - Java", 81],
+        ["Foundations of Data Science", 74],
+        ["Fundamentals of Computing", 70]
+      ]
+    }
+  ],
+
+  "skills": [
+    ["Languages", ["Python", "Java", "C", "C++", "C#", "Go", "Lua", "JavaScript/TypeScript", "SQL", "Bash"]],
+    ["Backend & systems", ["REST APIs", "Concurrency and multithreading", "Distributed systems (RPC, logical clocks, consensus)", "SQLite", "MySQL/MariaDB", "Flask", "FastAPI", "Electron"]],
+    ["AI / ML", ["PyTorch", "NumPy", "pandas", "scikit-learn", "Retrieval-augmented generation (RAG)", "Model Context Protocol (MCP)", "Local LLM inference (Ollama)", "Vector search", "Computer vision (CLIP/BiomedCLIP)", "Deep-learning interpretability"]],
+    ["Web", ["React", "Next.js", "Vite", "HTML", "CSS", "Tailwind"]],
+    ["Security & networking", ["Cryptography", "Network security", "802.11 and packet analysis", "Wireshark", "Cisco Packet Tracer"]],
+    ["Tools & practices", ["Git", "Linux", "Testing (pytest)", "Technical documentation"]]
+  ],
+
+  "projects": [
+    {
+      "slug": "hal",
+      "name": "Hal - local RAG AI assistant",
+      "stack": "Python, Ollama, MCP, NumPy",
+      "body": "A privacy-preserving retrieval-augmented assistant that answers strictly from a personal Obsidian knowledge base and runs entirely offline on one consumer GPU. Built from first principles: heading-aware chunking, a NumPy vector store with cosine similarity, and incremental re-indexing keyed on content hashes. Answers cite the note each passage came from, or say plainly that the notes do not cover it. Exposes its search over the Model Context Protocol with path-traversal guards, and works around a 32K context window with a three-tier memory system and twelve task-specific commands."
+    },
+    {
+      "slug": "probe-sniffer",
+      "name": "Probe Request Sniffer - passive Wi-Fi device counting",
+      "stack": "Python, scapy/pyshark, 802.11",
+      "body": "A passive 802.11 sniffer that counts devices through MAC randomisation by fingerprinting the information elements in each frame, so one phone maps to one identity however often it rotates its address. Over fifteen minutes in a real room the clustered count held at about 30 devices while raw address counting climbed past 250. Two capture backends behind one interface, a thread-safe sliding-window tracker with lazy expiry, and a test suite that crafts frames in memory, so it runs with no interface, monitor mode or root."
+    },
+    {
+      "slug": "lidar",
+      "name": "Lidar Autonavigation - real-time autonomous control",
+      "stack": "Lua, A*, control theory, linear algebra",
+      "body": "A real-time autopilot that sweeps laser rangefinders into a live obstacle map, plans with an A* search sliced across ticks so it never overruns the 60 Hz budget, and follows the route with speed-scaled pure pursuit. Written inside a hard 4096-character script cap, later raised to 8192, which made every byte a design decision: an octile heuristic for exact 8-connected cost, a clearance penalty that keeps it mid-channel, 3D rotation matrices for attitude compensation, and an O(1) hash-set spatial map."
+    },
+    {
+      "slug": "hatch",
+      "name": "Hatch - AI desktop companion",
+      "stack": "Electron, React, TypeScript, SQLite, FastAPI",
+      "body": "A 9,000-line Electron desktop pet whose creature leaves the app window and roams the desktop: one position in global screen coordinates, ticked at 30 Hz by the main process and drawn by transparent click-through overlay windows. The simulation engine is pure, so a 30-day life cycle is testable in a loop; persistence is event-sourced SQLite with versioned migrations and a backup taken before each one; and an optional Python AI sidecar sits behind a typed IPC boundary, with context isolation on and the renderer sandboxed."
+    }
+  ],
+
+
+  "moreProjects": "Further projects, including a Canvas API archiver and a Jupyter notebook alerting package, with write-ups for all of these at eoinforrest.me and github.com/NotEoin.",
+
+  "experience": [
+    {
+      "role": "Bartender",
+      "org": "The Old George Inn",
+      "dates": "Nov 2024 - May 2025",
+      "body": "Served 400+ customers a shift through peak periods as part of a team of five."
+    },
+    {
+      "role": "Bartender / Supervisor",
+      "org": "Bar Malden",
+      "dates": "May 2024 - Sep 2024",
+      "body": "Trained new staff, delegated tasks during service, and held accountability for cashing-up, weekly banking, inventory and audits. Upheld safety and licensing standards, and ran cellar operations including stock, shipments and contractor coordination."
+    }
+  ],
+
+  "additional": [
+    ["Community", "Volunteered with Cancer Research UK and at a community coffee bar."],
+    ["Interests", "Active in university societies: computing and technology, skateboarding, running, fellwalking, and cold-water swimming."]
+  ],
+
+  "closing": "References available on request."
+}

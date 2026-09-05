@@ -1,67 +1,49 @@
 import { Link } from 'react-router-dom'
 import usePageTitle from '../lib/usePageTitle'
-import { ArrowDown } from '../components/Icons'
+import { ArrowDown, ArrowUpRight } from '../components/Icons'
 import { CV_PDF, GITHUB, LINKEDIN } from '../data/projects'
 import { EmailLink, EmailText } from '../components/Email'
+import cv from '../data/cv.json'
 
 /**
- * The virtual CV. Content is the canonical `Eoin Forrest CV 2026` — the page
- * and /Eoin-Forrest-CV.pdf are updated in the same commit, always.
+ * The virtual CV. Every word below comes from `src/data/cv.json`, which
+ * `tools/build-cv-pdf.py` also reads to write /Eoin-Forrest-CV.pdf, so the
+ * page and the PDF cannot drift, whatever anyone forgets to update.
  *
- * The phone number is in the PDF only. On the page it is just a line waiting to
- * be harvested, and anyone who wants it has already downloaded the CV.
+ * Two deliberate differences from the PDF:
+ *   - the email renders only after hydration, so it stays out of the
+ *     prerendered HTML (see components/Email);
+ *   - the phone number is in the PDF only. On the page it is just a line
+ *     waiting to be harvested, and anyone who wants it has downloaded the CV.
+ *
+ * The content is ASCII by rule: no em dashes, no smart quotes, no arrows. The
+ * PDF build asserts it and fails rather than shipping a stray glyph.
  */
 
-const FINAL_YEAR: [string, number][] = [
-  ['Distributed Systems', 76],
-  ['Cryptography', 80],
-  ['System & Network Security', 79],
-  ['Computer Vision & AI', 68],
-  ['Major Project & Dissertation', 66],
+const NAV: [string, string][] = [
+  ['education', 'Education'],
+  ['skills', 'Technical skills'],
+  ['projects', 'Projects'],
+  ['experience', 'Work experience'],
+  ['additional', 'Additional'],
 ]
 
-const EARLIER: [string, number][] = [
-  ['Algorithm Design & Analysis', 86],
-  ['Security Programming', 77],
-  ['Software Systems Design & Implementation', 79],
-  ['Software Engineering Team Project', 73],
-  ['Computer Systems Design & Architectures', 96],
-]
-
-const SKILLS: [string, string[]][] = [
-  ['Languages', ['Bash', 'C', 'C++', 'C#', 'Go', 'Java', 'JavaScript/TypeScript', 'Lua', 'Python', 'SQL']],
-  ['Backend & systems', ['Concurrency/multithreading', 'Distributed systems', 'Electron', 'FastAPI', 'Flask', 'MySQL/MariaDB', 'REST APIs', 'SQLite']],
-  ['AI / ML', ['Computer vision', 'Deep-learning interpretability', 'Local LLM inference (Ollama)', 'Model Context Protocol (MCP)', 'Retrieval-augmented generation (RAG)', 'Vector search']],
-  ['Web', ['CSS', 'HTML', 'Next.js', 'React', 'Tailwind']],
-  ['Tools & practices', ['Git', 'Linux', 'Networking (Wireshark, Cisco Packet Tracer)', 'Security fundamentals', 'Technical documentation', 'Testing']],
-]
-
-const CV_PROJECTS: { name: string; stack: string; body: string; slug: string }[] = [
-  {
-    name: 'Hal — local RAG AI assistant',
-    stack: 'Python, Ollama, MCP, NumPy',
-    slug: 'hal',
-    body: 'A privacy-preserving retrieval-augmented assistant that answers strictly from a personal knowledge base and runs entirely offline. Built from first principles: heading-aware chunking, a NumPy vector store with cosine similarity, and incremental re-indexing keyed on content hashes. Exposes its search as an MCP server with path-traversal guards. Spawned two specialised tools: hambot, an AI archivist that catalogued a real 594-source corpus into ~18,000 cross-links with zero broken links using a VRAM-aware 7B-vision / 30B-text pipeline on a single GPU; and hal-voice, a hands-free voice interface (wake word → Whisper STT → synthesised speech).',
-  },
-  {
-    name: 'Probe Request Sniffer — passive Wi-Fi device counting',
-    stack: 'Python, scapy/pyshark, 802.11',
-    slug: 'probe-sniffer',
-    body: "A passive 802.11 sniffer that sees through MAC randomisation by fingerprinting each frame's information elements, so one physical device maps to one identity. Pluggable capture backends behind a clean abstraction, a thread-safe sliding-window tracker with lazy expiry, and an ergonomic CLI.",
-  },
-  {
-    name: 'LIDAR Autonomous Navigation',
-    stack: 'Lua, A*, control theory, linear algebra',
-    slug: 'lidar',
-    body: 'A real-time autopilot that sweeps a laser to build a live obstacle map, plans with a tick-sliced A* search, and follows the route with pure-pursuit steering and Catmull-Rom smoothing — all inside a hard 4096-character microcontroller limit that forced genuine optimisation. Uses 3D rotation matrices for attitude compensation and an O(1) hash-set spatial map.',
-  },
-  {
-    name: 'Hatch — AI desktop companion',
-    stack: 'Electron, React, TypeScript, SQLite, FastAPI',
-    slug: 'hatch',
-    body: 'An ~10k-line Electron desktop pet with a deterministic simulation engine, a ~30 Hz desktop-presence system using transparent overlay windows, event-sourced SQLite persistence with versioned migrations, and an optional supervised Python AI sidecar behind a typed IPC boundary.',
-  },
-]
+/** The one piece of markup cv.json carries: **bold** for a paragraph lead-in. */
+function Rich({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\*\*.+?\*\*)/s).map((part, i) =>
+        part.startsWith('**') && part.endsWith('**') ? (
+          <strong key={i} className="font-medium text-[var(--text-hi)]">
+            {part.slice(2, -2)}
+          </strong>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  )
+}
 
 function MarkBars({ rows }: { rows: [string, number][] }) {
   return (
@@ -92,6 +74,32 @@ function Section({ id, title, children }: { id: string; title: string; children:
   )
 }
 
+/** A titled entry: name, the grey meta line under it, then the prose. */
+function Entry({
+  title,
+  meta,
+  body,
+  size = 'text-body-l',
+  children,
+}: {
+  title: string
+  meta: string
+  body: string
+  size?: string
+  children?: React.ReactNode
+}) {
+  return (
+    <article className="max-w-[68ch]">
+      <h3 className={`${size} font-medium text-[var(--text-hi)]`}>{title}</h3>
+      <p className="mt-1 font-mono text-mono-data text-[var(--text-lo)]">{meta}</p>
+      <p className="mt-3 text-body-m text-[var(--text-md)]">
+        <Rich text={body} />
+      </p>
+      {children}
+    </article>
+  )
+}
+
 export default function CV() {
   usePageTitle('CV')
 
@@ -100,9 +108,7 @@ export default function CV() {
       {/* rail */}
       <aside className="no-print md:sticky md:top-[70px] md:self-start">
         <h1 className="text-title-m font-medium text-[var(--text-hi)]">Eoin Forrest</h1>
-        <p className="mt-2 max-w-[32ch] text-body-s text-[var(--text-md)]">
-          Computer Science graduate — backend, systems and applied AI
-        </p>
+        <p className="mt-2 max-w-[32ch] text-body-s text-[var(--text-md)]">{cv.title}</p>
         <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 font-mono text-[12px] leading-relaxed">
           <dt className="text-[var(--text-lo)]">Email</dt>
           <dd className="m-0 text-[var(--text-md)]">
@@ -118,20 +124,14 @@ export default function CV() {
           </dd>
         </dl>
         <p className="mt-4 max-w-[30ch] font-mono text-[11px] leading-[1.8] text-[var(--text-lo)]">
-          London / Newcastle · open to relocation · UK &amp; Irish citizen (no visa sponsorship required)
+          London / Newcastle | open to relocation | UK &amp; Irish citizen (no visa sponsorship required)
         </p>
         <a href={CV_PDF} download className="btn btn-primary mt-7">
           Download PDF <ArrowDown className="text-[var(--accent)]" />
         </a>
         <nav aria-label="CV sections" className="mt-8 hidden md:block">
           <ul className="m-0 list-none space-y-1.5 p-0 font-mono text-[11px] uppercase tracking-[.12em]">
-            {[
-              ['education', 'Education'],
-              ['skills', 'Technical skills'],
-              ['projects', 'Projects'],
-              ['experience', 'Work experience'],
-              ['additional', 'Additional'],
-            ].map(([id, label]) => (
+            {NAV.map(([id, label]) => (
               <li key={id}>
                 <a href={`#${id}`} className="text-[var(--text-lo)] hover:text-[var(--text-hi)]">{label}</a>
               </li>
@@ -146,61 +146,42 @@ export default function CV() {
         <header className="cv-print-header hidden print:block">
           <h2 className="text-[20px] font-medium text-[var(--text-hi)]">Eoin Forrest</h2>
           <p className="mt-1 font-mono text-[10px] text-[var(--text-lo)]">
-            <EmailText /> · linkedin.com/in/eoin-forrest · github.com/NotEoin · eoinforrest.me
+            <EmailText /> | linkedin.com/in/eoin-forrest | github.com/NotEoin | eoinforrest.me
             <br />
-            London / Newcastle · open to relocation · UK &amp; Irish citizen (no visa sponsorship required)
+            London / Newcastle | open to relocation | UK &amp; Irish citizen (no visa sponsorship required)
           </p>
         </header>
+
         <section className="cv-section pb-[clamp(28px,4vh,44px)]">
-          <p className="max-w-[68ch] text-body-l text-[var(--text-hi)]">
-            First-class Computer Science graduate from Newcastle University seeking a graduate software
-            engineering role. Comfortable across the stack but happiest building backend, systems, and
-            applied-AI software — from local retrieval-augmented AI assistants and real-time control systems
-            to passive network-sensing tools. I care about clean, well-documented code and about things
-            working end-to-end.
-          </p>
+          <p className="max-w-[68ch] text-body-l text-[var(--text-hi)]">{cv.summary}</p>
         </section>
 
         <Section id="education" title="Education">
-          <h3 className="text-body-l font-medium text-[var(--text-hi)]">
-            BSc (Hons) Computer Science — First-Class Honours
-          </h3>
-          <p className="mt-1 font-mono text-mono-data text-[var(--text-lo)]">
-            Newcastle University · Sep 2023 – Jun 2026 · accredited by BCS, The Chartered Institute for IT
-          </p>
-          <p className="mt-5 max-w-[68ch] text-body-m text-[var(--text-md)]">
-            <strong className="font-medium text-[var(--text-hi)]">
-              Dissertation — <em className="not-italic">From Latent Concept Vectors to Anatomy-Conditioned Dense Readouts</em>:
-            </strong>{' '}
-            an applied machine-learning research project in deep-learning interpretability and computer
-            vision, extracting human-interpretable concepts from a neural network and using them to
-            condition dense, anatomy-aware predictions.
-          </p>
-          <div className="mt-7 grid gap-8 sm:grid-cols-2">
-            <div>
-              <h4 className="mb-3 font-mono text-[11px] uppercase tracking-[.12em] text-[var(--text-lo)]">
-                Final-year modules
-              </h4>
-              <MarkBars rows={FINAL_YEAR} />
-            </div>
-            <div>
-              <h4 className="mb-3 font-mono text-[11px] uppercase tracking-[.12em] text-[var(--text-lo)]">
-                Selected earlier modules
-              </h4>
-              <MarkBars rows={EARLIER} />
-            </div>
+          <div className="space-y-7">
+            {cv.education.map(entry => (
+              <Entry
+                key={entry.qualification}
+                title={entry.qualification}
+                meta={entry.meta}
+                body={entry.detail}
+              />
+            ))}
           </div>
-          <h3 className="mt-9 text-body-m font-medium text-[var(--text-hi)]">
-            Access to Higher Education Diploma: Computing
-          </h3>
-          <p className="mt-1 font-mono text-mono-data text-[var(--text-lo)]">
-            Kingston College · Sep 2022 – Jul 2023 · 30 units at Distinction, 15 at Merit
-          </p>
+          <div className="mt-8 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+            {cv.modules.map(group => (
+              <div key={group.year}>
+                <h4 className="mb-3 font-mono text-[11px] uppercase tracking-[.12em] text-[var(--text-lo)]">
+                  {group.year}
+                </h4>
+                <MarkBars rows={group.rows as [string, number][]} />
+              </div>
+            ))}
+          </div>
         </Section>
 
         <Section id="skills" title="Technical skills">
           <dl className="m-0 space-y-5">
-            {SKILLS.map(([group, items]) => (
+            {(cv.skills as [string, string[]][]).map(([group, items]) => (
               <div key={group}>
                 <dt className="mb-2 font-mono text-[11px] uppercase tracking-[.12em] text-[var(--text-lo)]">{group}</dt>
                 <dd className="m-0 flex flex-wrap gap-1.5">
@@ -220,61 +201,48 @@ export default function CV() {
 
         <Section id="projects" title="Projects">
           <div className="space-y-8">
-            {CV_PROJECTS.map(p => (
-              <article key={p.slug} className="max-w-[68ch]">
-                <h3 className="text-body-l font-medium text-[var(--text-hi)]">{p.name}</h3>
-                <p className="mt-1 font-mono text-mono-data text-[var(--text-lo)]">{p.stack}</p>
-                <p className="mt-3 text-body-m text-[var(--text-md)]">{p.body}</p>
+            {cv.projects.map(p => (
+              <Entry key={p.slug} title={p.name} meta={p.stack} body={p.body}>
                 <p className="no-print mt-2 font-mono text-[11px] uppercase tracking-[.12em]">
-                  <Link to={`/projects/${p.slug}`} className="text-[var(--text-hi)] hover:text-[var(--accent)]">
-                    Read the write-up →
+                  <Link
+                    to={`/projects/${p.slug}`}
+                    className="inline-flex items-center gap-1.5 text-[var(--text-hi)] hover:text-[var(--accent)]"
+                  >
+                    Read the write-up <ArrowUpRight />
                   </Link>
                 </p>
-              </article>
+              </Entry>
             ))}
-            <p className="max-w-[68ch] text-body-s italic text-[var(--text-lo)]">
-              More projects — including an autonomous recovery drone and a Canvas API archiver — at{' '}
-              <Link to="/projects" className="not-italic text-[var(--text-md)] hover:text-[var(--accent)]">eoinforrest.me/projects</Link>{' '}
-              and <a href={GITHUB} target="_blank" rel="noreferrer" className="not-italic text-[var(--text-md)] hover:text-[var(--accent)]">github.com/NotEoin</a>.
+
+            <p className="max-w-[68ch] text-body-s text-[var(--text-lo)]">
+              {cv.moreProjects}
             </p>
           </div>
         </Section>
 
         <Section id="experience" title="Work experience">
           <div className="space-y-7">
-            <article className="max-w-[68ch]">
-              <h3 className="text-body-m font-medium text-[var(--text-hi)]">Bartender · The Old George Inn</h3>
-              <p className="mt-1 font-mono text-mono-data text-[var(--text-lo)]">Nov 2024 – May 2025</p>
-              <p className="mt-2 text-body-m text-[var(--text-md)]">
-                Delivered fast, high-quality service to 400+ customers per shift during peak periods,
-                coordinating with a team of five.
-              </p>
-            </article>
-            <article className="max-w-[68ch]">
-              <h3 className="text-body-m font-medium text-[var(--text-hi)]">Bartender / Supervisor · Bar Malden</h3>
-              <p className="mt-1 font-mono text-mono-data text-[var(--text-lo)]">May 2024 – Sep 2024</p>
-              <p className="mt-2 text-body-m text-[var(--text-md)]">
-                Trained new staff, delegated tasks, and upheld safety and licensing standards. Handled
-                cashing-up, weekly banking, inventory, audits, and cellar operations including stock,
-                shipments, and contractor coordination.
-              </p>
-            </article>
+            {cv.experience.map(job => (
+              <Entry
+                key={job.org}
+                title={`${job.role}, ${job.org}`}
+                meta={job.dates}
+                body={job.body}
+                size="text-body-m"
+              />
+            ))}
           </div>
         </Section>
 
         <Section id="additional" title="Additional">
           <ul className="m-0 max-w-[68ch] list-none space-y-2 p-0 text-body-m text-[var(--text-md)]">
-            <li>
-              <strong className="font-medium text-[var(--text-hi)]">Community:</strong> Volunteered with Cancer
-              Research UK and at a community coffee bar.
-            </li>
-            <li>
-              <strong className="font-medium text-[var(--text-hi)]">Interests:</strong> Active in university
-              societies — computing &amp; technology, skateboarding, running, fellwalking, and cold-water
-              swimming.
-            </li>
+            {(cv.additional as [string, string][]).map(([label, body]) => (
+              <li key={label}>
+                <Rich text={`**${label}:** ${body}`} />
+              </li>
+            ))}
           </ul>
-          <p className="mt-8 text-body-s italic text-[var(--text-lo)]">References available on request.</p>
+          <p className="mt-8 text-body-s text-[var(--text-lo)]">{cv.closing}</p>
         </Section>
       </div>
     </div>
