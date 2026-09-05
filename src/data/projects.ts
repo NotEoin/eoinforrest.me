@@ -106,7 +106,7 @@ export const projects: Project[] = [
     name: 'Probe Request Sniffer',
     hook: 'Counting devices through MAC randomisation by IE fingerprinting',
     stack: ['Python', 'scapy'],
-    year: '2025',
+    year: '2024–26',
     status: 'Prototype',
     categories: ['Networking'],
     tint: 'var(--tint-sniffer)',

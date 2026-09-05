@@ -40,7 +40,7 @@ const ACTS: { slug: string; copy: ActCopy }[] = [
   {
     slug: 'probe-sniffer',
     copy: {
-      eyebrow: '// 03 — Network sensing · Python · 802.11 · 2025',
+      eyebrow: '// 03 — Network sensing · Python · 802.11 · 2024–2026',
       title: 'Probe Request Sniffer',
       tagline: 'How many people are in this room? Ask their phones.',
       hook: 'Estimate how many devices are nearby by passively listening for the WiFi probe requests phones broadcast — and get a useful number back even though modern phones randomise their MAC address specifically to prevent this.',
