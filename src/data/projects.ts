@@ -118,10 +118,10 @@ export const projects: Project[] = [
     related: [],
     plate: {
       kind: 'image',
-      src: '/media/sniffer/clustering.png',
-      width: 1596,
-      height: 630,
-      label: 'CLUSTERING — raw vs clustered count, true headcount annotated',
+      src: '/media/sniffer/live-capture.png',
+      width: 2400,
+      height: 1350,
+      label: 'LIVE CAPTURE — 257 addresses over fifteen minutes, around 30 devices',
     },
   },
   {
