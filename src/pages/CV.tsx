@@ -2,10 +2,14 @@ import { Link } from 'react-router-dom'
 import usePageTitle from '../lib/usePageTitle'
 import { ArrowDown } from '../components/Icons'
 import { CV_PDF, GITHUB, LINKEDIN } from '../data/projects'
+import { EmailLink, EmailText } from '../components/Email'
 
 /**
  * The virtual CV. Content is the canonical `Eoin Forrest CV 2026` — the page
  * and /Eoin-Forrest-CV.pdf are updated in the same commit, always.
+ *
+ * The phone number is in the PDF only. On the page it is just a line waiting to
+ * be harvested, and anyone who wants it has already downloaded the CV.
  */
 
 const FINAL_YEAR: [string, number][] = [
@@ -102,11 +106,7 @@ export default function CV() {
         <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 font-mono text-[12px] leading-relaxed">
           <dt className="text-[var(--text-lo)]">Email</dt>
           <dd className="m-0 text-[var(--text-md)]">
-            <a href="mailto:Forrest.Eoin@gmail.com" className="hover:text-[var(--accent)]">Forrest.Eoin@gmail.com</a>
-          </dd>
-          <dt className="text-[var(--text-lo)]">Phone</dt>
-          <dd className="m-0 text-[var(--text-md)]">
-            <a href="tel:+447484835722" className="hover:text-[var(--accent)]">07484 835722</a>
+            <EmailLink className="hover:text-[var(--accent)]" />
           </dd>
           <dt className="text-[var(--text-lo)]">LinkedIn</dt>
           <dd className="m-0 text-[var(--text-md)]">
@@ -146,7 +146,7 @@ export default function CV() {
         <header className="cv-print-header hidden print:block">
           <h2 className="text-[20px] font-medium text-[var(--text-hi)]">Eoin Forrest</h2>
           <p className="mt-1 font-mono text-[10px] text-[var(--text-lo)]">
-            Forrest.Eoin@gmail.com · 07484 835722 · linkedin.com/in/eoin-forrest · github.com/NotEoin · eoinforrest.me
+            <EmailText /> · linkedin.com/in/eoin-forrest · github.com/NotEoin · eoinforrest.me
             <br />
             London / Newcastle · open to relocation · UK &amp; Irish citizen (no visa sponsorship required)
           </p>
