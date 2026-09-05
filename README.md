@@ -1,18 +1,13 @@
 # eoinforrest.me
 
-My portfolio site — a virtual CV, a cinematic reel of five projects, and interactive demos you can
-operate in the browser.
+My portfolio site — a virtual CV, a cinematic reel of five projects, and a write-up for each.
 
 ## What it is
 
 - **`/`** — an introduction, five full-screen project acts, how the projects connect, the short CV and contact.
-- **`/projects`** — a fast index of all nine projects.
-- **`/projects/:slug`** — a deep dive per project, with its demo where a demo helps.
+- **`/projects`** — a fast index of all seven projects.
+- **`/projects/:slug`** — a deep dive per project, with its figures.
 - **`/cv`** — the virtual CV, printable, with a matching PDF at `/Eoin-Forrest-CV.pdf`.
-
-The five demos are faithful but scripted reconstructions: the Lidar A\* search and the sniffer's
-fingerprint clustering are genuinely computed in the browser; the hal-voice timings and the RAG
-answers are authored. Every demo says so in its caption.
 
 ## Stack
 
