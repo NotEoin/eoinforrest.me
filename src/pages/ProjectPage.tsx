@@ -24,7 +24,7 @@ export default function ProjectPage() {
   const project = slug ? bySlug(slug) : undefined
   usePageTitle(project?.published && project.hasPage ? project.name : '404')
 
-  // unpublished pages 404 until sign-off; row 09 has no page at all
+  // unpublished projects, and rows that carry no page, 404 rather than render
   if (!project || !project.published || !project.hasPage) return <NotFound />
 
   const writeup = writeups[project.slug]

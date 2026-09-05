@@ -32,8 +32,9 @@ export interface Project {
   repo: string | null
   licence: string | null
   role: string
+  /** false hides the row and 404s the page — for work not yet cleared to show */
   published: boolean
-  /** row 09 (Cramberry) has a row but no page */
+  /** false gives a row on /projects but no page behind it */
   hasPage: boolean
   demo?: DemoKey
   related: string[]
@@ -180,33 +181,8 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'cxr-zeroshot-segmentation',
-    index: '06',
-    name: 'Zero-shot CXR segmentation',
-    hook: 'Can a frozen vision-language model localise pathology from text alone?',
-    stack: ['PyTorch', 'BiomedCLIP'],
-    year: '2026',
-    status: 'Submitted',
-    categories: ['AI / ML'],
-    tint: 'var(--tint-cxr)',
-    repo: `${GITHUB}/cxr-zeroshot-segmentation`,
-    licence: null,
-    role: 'Sole developer (dissertation)',
-    // gated until supervisor sign-off and a licence choice
-    published: false,
-    hasPage: true,
-    related: ['jupyter-tts-alerts'],
-    plate: {
-      kind: 'image',
-      src: '/media/cxr/overlays.png',
-      width: 1600,
-      height: 900,
-      label: 'OVERLAYS — predicted mask over radiograph grid (DUA check first)',
-    },
-  },
-  {
     slug: 'canvas-downloader',
-    index: '07',
+    index: '06',
     name: 'Canvas Downloader',
     hook: 'Archiving course files that only exist as links inside page HTML',
     stack: ['Python'],
@@ -230,7 +206,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'jupyter-tts-alerts',
-    index: '08',
+    index: '07',
     name: 'jupyter-tts-alerts',
     hook: 'Your notebook tells you out loud when a six-hour cell finishes',
     stack: ['Python'],
@@ -243,7 +219,7 @@ export const projects: Project[] = [
     role: 'Sole developer',
     published: true,
     hasPage: true,
-    related: ['cxr-zeroshot-segmentation'],
+    related: [],
     plate: {
       kind: 'image',
       src: '/media/jupyter/behaviour.png',
@@ -252,23 +228,6 @@ export const projects: Project[] = [
       label: 'BEHAVIOUR — announcement rules by cell runtime',
     },
   },
-  {
-    slug: 'cramberry',
-    index: '09',
-    name: 'Cramberry',
-    hook: 'A collaborative revision platform built in a university team',
-    stack: ['React', 'Flask', 'Azure'],
-    year: '2025',
-    status: 'Works',
-    categories: ['Applications'],
-    tint: 'var(--tint-util)',
-    repo: null,
-    licence: null,
-    role: 'Team project',
-    published: true,
-    hasPage: false,
-    related: [],
-  },
 ]
 
 /** the five home-page acts, in reel order */
@@ -276,5 +235,5 @@ export const actSlugs = ['lidar', 'hatch', 'probe-sniffer', 'hal-voice', 'hal'] 
 
 export const bySlug = (slug: string) => projects.find(p => p.slug === slug)
 
-/** rows shown on /projects — the cxr row stays hidden until sign-off */
+/** rows shown on /projects */
 export const indexRows = projects.filter(p => p.published)

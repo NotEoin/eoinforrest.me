@@ -18,14 +18,7 @@ function Row({ p }: { p: Project }) {
       <span className="font-mono text-mono-data text-[var(--text-lo)] [font-variant-numeric:tabular-nums]">
         {p.index}
       </span>
-      <span className="text-body-m font-medium text-[var(--text-hi)]">
-        {p.name}
-        {p.slug === 'cramberry' && (
-          <span className="ml-2 font-mono text-[10px] uppercase tracking-[.1em] text-[var(--text-lo)]">
-            team project
-          </span>
-        )}
-      </span>
+      <span className="text-body-m font-medium text-[var(--text-hi)]">{p.name}</span>
       <span className="col-start-2 col-end-4 text-body-s text-[var(--text-md)] md:col-start-auto md:col-end-auto md:truncate">
         {p.hook}
       </span>
@@ -52,8 +45,8 @@ function Row({ p }: { p: Project }) {
     </div>
   )
 
-  // row 09 has no page — it stays a row, not a dead link. The row link is a
-  // stretched overlay so the repo anchor never nests inside another anchor.
+  // A row without a page stays a row rather than becoming a dead link. The row
+  // link is a stretched overlay so the repo anchor never nests inside another.
   return (
     <div className="group relative block">
       {p.hasPage && (
@@ -78,8 +71,8 @@ export default function Projects() {
       <header className="max-w-[1200px]">
         <p className="m-0 font-mono text-mono-label uppercase text-[var(--text-lo)]">// All projects</p>
         <h1 className="mt-4 max-w-[52ch] text-body-l text-[var(--text-hi)]">
-          Personal projects, plus one built in a university team. Each is a repository with a README that
-          explains the reasoning, not just the setup.
+          Seven personal projects. Each is a repository with a README that explains the reasoning,
+          not just the setup.
         </h1>
         <div className="mt-8 flex flex-wrap gap-1.5" role="group" aria-label="Filter projects">
           {FILTERS.map(f => (

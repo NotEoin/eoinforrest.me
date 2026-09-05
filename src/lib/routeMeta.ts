@@ -30,7 +30,7 @@ const staticRoutes: RouteMeta[] = [
     path: '/projects',
     title: 'Eoin Forrest — Projects',
     description:
-      'Eight projects in systems, applied AI, networking and tooling — each with a write-up explaining the reasoning, not just the setup.',
+      'Seven projects in systems, applied AI, networking and tooling — each with a write-up explaining the reasoning, not just the setup.',
   },
   {
     path: '/cv',
