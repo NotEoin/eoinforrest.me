@@ -26,11 +26,10 @@ export interface ActCopy {
  * either way, no hard cuts.
  *
  * The copy is a four-tier ladder: mono eyebrow, the project name at display
- * size, the README hero line as an italic serif standfirst, then the
- * description. Fraunces italic 500 is the only italic face in the build and
- * is used nowhere else, which is what keeps the standfirst from reading as
- * another paragraph of body copy. Its optical-size axis is left on auto, so
- * the face tightens itself as the clamp scales the line up.
+ * size, the README hero line as a standfirst, then the description. The
+ * standfirst separates from the description by size, weight and colour rather
+ * than by a second family — the build is Geist and Geist Mono and nothing
+ * else, and a serif here read as an import from a different site.
  */
 export default function ActSection({
   project,
@@ -77,8 +76,9 @@ export default function ActSection({
         {copy.title}
       </h2>
       <p
-        className={`m-0 mt-[18px] font-serif text-[clamp(1.3125rem,2.05vw,1.75rem)] font-medium italic
-                    leading-[1.28] text-[var(--text-hi)] ${full ? 'max-w-[46ch]' : 'max-w-[42ch]'} ${push}`}
+        className={`m-0 mt-[18px] text-[clamp(1.3125rem,2.05vw,1.75rem)] font-light
+                    leading-[1.34] tracking-[-0.015em] text-[var(--text-hi)]
+                    ${full ? 'max-w-[46ch]' : 'max-w-[42ch]'} ${push}`}
       >
         {copy.tagline}
       </p>

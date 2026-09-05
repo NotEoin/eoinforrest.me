@@ -17,7 +17,6 @@ import urllib.request
 FAMILIES = (
     "family=Geist:wght@300;400;500;600;700"
     "&family=Geist+Mono:wght@400;500"
-    "&family=Fraunces:ital,opsz,wght@1,9..144,500"
 )
 KEEP_SUBSETS = ("latin", "latin-ext")
 UA = (
