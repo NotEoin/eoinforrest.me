@@ -324,8 +324,8 @@ export const writeups: Record<string, Writeup> = {
             Stated because it matters more than the result:{' '}
             <Key>two identical handsets on the same OS version fingerprint alike and merge into one.</Key> That
             undercount is inherent to the approach, not a bug in this implementation. The output is{' '}
-            <em>roughly how busy is this space</em>, not a census — and the figure above shows that gap
-            rather than hiding it.
+            <em>roughly how busy is this space</em>, not a census — and nothing in the figure above can tell
+            you how large that gap was, because a real room offers no ground truth to check against.
           </p>
         </ProseBlock>
       </>
@@ -381,15 +381,16 @@ export const writeups: Record<string, Writeup> = {
           <p>
             <Key>Works:</Key> live device counting on a monitor-mode adapter, with the clustering doing what it
             claims, on both backends — plus a <Code>--no-fingerprint</Code> comparison mode so you can watch the
-            raw MAC count climb while the device count holds steady.
+            raw MAC count climb while the device count holds steady. That comparison is the figure above,
+            run against fifteen minutes of one real room: <Key>257 distinct addresses, and around thirty
+            devices throughout.</Key> The tracker and both backends are covered by a test suite that crafts
+            probe requests in memory, so it runs without an interface, monitor mode or root.
           </p>
           <p>
-            <Key>Known rough edges:</Key> accuracy is unvalidated against a known headcount over a long period —
-            it is clearly better than raw MAC counting, but <em>how much</em> better is an open question.
-            There are no tests, and the tracker is pure functions over synthetic probe events, so it needs
-            no hardware and is the obvious place to start. Output is terminal only, with no persistence,
-            time series or dashboard, and it needs monitor-mode-capable hardware, which rules out most
-            laptops without a USB adapter.
+            <Key>Known rough edges:</Key> accuracy is unvalidated against a known headcount — it is clearly
+            better than raw MAC counting, but <em>how much</em> better is an open question. Output is terminal
+            only, with no time series or dashboard, and it needs monitor-mode-capable hardware, which rules
+            out most laptops without a USB adapter.
           </p>
         </ProseBlock>
       </>
